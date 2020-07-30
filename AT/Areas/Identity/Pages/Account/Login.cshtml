@@ -1,0 +1,89 @@
+﻿@page
+@model LoginModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AT.Data.Entity.ATuser> SignInManager
+@inject UserManager<AT.Data.Entity.ATuser> UserManager
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - At Work</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="~/css/animate.css" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/css/animate.css" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    </environment>
+
+
+</head>
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">At</h1>
+
+            </div>
+            <h3>Welcome to At Work</h3>
+            <p>
+            </p>
+            <p>Login in. To see it in action.</p>
+
+            <form class="m-t" role="form" id="account" method="post">
+                <div class="form-group">
+                    <input type="email" class="form-control" asp-for="Input.Email" placeholder="Username" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" asp-for="Input.Password" placeholder="Password" required="">
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <a class="btn btn-default pull-right" asp-page="./">Home</a>
+
+                <a id="forgot-password" asp-page="./ForgotPassword"><small>Forgot password?</small></a>
+                <p class="text-muted text-center"><small>Do not have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </form> 
+            <div class="flex-c-m">
+                <a href="#" class="login100-social-item bg1">
+                    <i class="fa fa-facebook"></i>
+                </a>
+
+                <a href="#" class="login100-social-item bg2">
+                    <i class="fa fa-twitter"></i>
+                </a>
+
+                <a href="#" class="login100-social-item bg3">
+                    <i class="fa fa-google"></i>
+                </a>
+            </div>
+            <p class="m-t"> <small>At Work &copy; 2020</small> </p>
+        </div>
+    </div>
+
+</body>
+</html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

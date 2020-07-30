@@ -1,0 +1,104 @@
+﻿
+@using AT.Data;
+@using AT.Data.Entity;
+@inject AT.Service.Services.MenuToUserAndPermission.IMenuService _menuService
+@{
+
+    var mainlist = await _menuService.menuList("");
+
+    if (mainlist.Count > 0)
+    {
+        foreach (var mnuitm in mainlist)
+        //for (int i = 0; i < mainlist.Count; i++)
+        {
+           
+            <li class="treeview mainparentmenu" id="@mnuitm.Id">
+                <a>
+                    <i class="@mnuitm.Icon"></i>@mnuitm.DisplayName
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+
+                @{
+                    if (mnuitm.MenuSubMenu.Count > 0)
+                    {
+                        <ul class="treeview-menu">
+                            @foreach (var submenuitem in mnuitm.MenuSubMenu)
+                            {
+
+                                @if (submenuitem.MenuSubMenu.Count > 0)
+                                {
+                                    string dispalySubName = ""; /*Utils.ToggleLanguage(submenuitem.DisplayName, submenuitem.NepName);*/
+                                    <li class="treeview subparmenu" id="@submenuitem.Icon">
+                                        <a>
+                                            <i class="@submenuitem.Icon"></i>@dispalySubName
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            @foreach (var subsubmenuitem in submenuitem.MenuSubMenu)
+                                            {
+                                                <li id="@subsubmenuitem.Id" class="actMenChild">
+                                                    <a href="~/@Url.Content(subsubmenuitem.MenuUrl)">
+                                                        <i class="@subsubmenuitem.Icon"></i>@*@Utils.ToggleLanguage(subsubmenuitem.DisplayName, subsubmenuitem.NepName)*@
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li id="@submenuitem.Id" class="actMenChild">
+                                        <a href="~/@Url.Content(submenuitem.MenuUrl)">
+                                            <i class="@submenuitem.Icon"></i>@*@Utils.ToggleLanguage(submenuitem.DisplayName, submenuitem.NepName)*@
+                                        </a>
+                                    </li>
+                                }
+
+
+                            }
+                        </ul>
+                    }
+                }
+            </li>
+        }
+    }
+}
+
+
+<script lang="ja" type="text/javascript">
+    jQuery(document).ready(function () {
+       // FirstLoginClearStoraage();
+        var childmenu = localStorage.getItem('childmenu'); //for the child menu
+        if (childmenu != null) {
+            $('#' + childmenu).addClass('active'); //this is for the child menu
+            var main_id = $('#' + childmenu).parent('ul').closest("li").attr("id");
+            $('#' + main_id).addClass('active'); //this is for the sub menu
+            if (main_id != null) {
+                var mainparentid = $('#' + main_id).parent('ul').closest("li").attr("id");//this is for the main menu id
+                $('#' + mainparentid).addClass('active');
+            }
+        }
+
+        jQuery(document).on('click', '.actMenChild', function () {
+            localStorage.clear()
+            var clickedId = $(this).attr('id');
+            localStorage.setItem('childmenu', clickedId);
+        });
+
+    });
+
+    function FirstLoginClearStoraage() {
+        var loguser = "@User.Identity.Name"
+        if (loguser == null || loguser == '') {
+
+            localStorage.clear();
+        }
+    }
+
+
+</script>

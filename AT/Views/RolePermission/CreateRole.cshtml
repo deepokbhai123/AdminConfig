@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "CreateRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateRole</h1>
+
+@*<div class="table-responsive" style="overflow:auto;width:100%">
+    <table id="rolelist" class=" ">
+        <thead>
+            <tr>
+                <th>sn</th>
+                <th width="20px">Job Number</th>
+                <th width="20px">Job Progress</th>
+                <th width="10px">Repairer Post Code</th> 
+            </tr>
+        </thead>
+
+    </table>
+</div>*@
+<table id="example1" class="table table-bordered table-responsive-xl table-hover display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Action</th>
+        </tr>
+    </thead> 
+</table>
+ 
+@*<script src="~/JsServices/roleService/rolelist.js"></script>*@
+<script lang="ja" type="text/javascript">
+
+    jQuery(document).ready(function () {
+        //$("#example1").DataTable();
+        loadtable();
+    });
+
+
+function loadtable() {
+    var table = jQuery("#example1");
+    table.DataTable({
+       // "bProcessing": true,
+        //"processing": true,
+       // "serverSide": true,
+        //"dom": '<"clear">t<"row"<"col-sm-3"l><"col-sm-3"i><"col-sm-6"p>><"clear">',
+        'searching': true,//recordsFiltered
+        "ajax": {
+            "url": "@Url.Content("~/rolelist.html")", "type": "POST", "data": function (d) {
+                d.status = "bmscompleted";
+            }
+        },
+        "language": {
+            "infoFiltered": ""
+        },
+        'stateSave': true,
+        //'select': {
+        //    info: false
+        //},
+        //'select': {
+        //    'style': 'multi'
+        //},
+        'createdRow': function (row, data, dataIndex) {
+            $(row).attr('id', data.id);
+        },
+        "columns": [ 
+            { "data": "name", "orderable": true },
+            { "data": "normalizedName", "orderable": true },
+            { "data": "concurrencyStamp", "orderable": true },
+            { "data": "concurrencyStamp", "orderable": true },
+            { "data": "concurrencyStamp", "orderable": true },
+            { "data": "id", "orderable": false },
+        ],
+        "rowCallback": rowCallback,
+        order: [
+
+            [2, "desc"]
+        ],
+        "paging": true,
+        "pageLength": 10,
+        lengthMenu: [
+            [5, 10, 20, 50, 100, 500], [5, 10, 20, 50, 100, 500]
+        ],
+        "fnInitComplete": function (oSettings, json) {
+            //jQuery("#estimate").css({ "display": "table" }).animate({ "opacity": 1 }, 500);
+        },
+
+    });
+    jQuery('#usersearch').on("keyup", function () {
+        table.fnFilter(this.value);
+    }).on("keypress", function (e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+    function rowCallback(row, data, index) {
+        var url = '/@ViewContext.RouteData.Values["orgid"]/bms/' + data.id + '/ViewBmsJob.html';
+        var link = "<a class='process' href='" + url + "'>" + data.jobnumber + "</a>";
+        jQuery('td:first-child', row).find("input").attr({ "id": data.id, "name": "Ids", "value": data.id });
+        jQuery('td:nth-child(1)', row).html(link);
+        jQuery('td:last-child', row).html("<a href=" + url + " title='Edit BMS' class='process' data-toggle='tooltip'><i class='fa fa-edit'></i></a>");
+    }
+
+}
+
+</script>

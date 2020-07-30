@@ -1,0 +1,185 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AT.Data.Entity;
+@inject SignInManager<ATuser> SignInManager
+@inject UserManager<ATuser> UserManager
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>At Work| Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <script src="@Url.Content("~/js/jquery.min.js")"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="@Url.Content("~/bower_components/bootstrap/dist/css/bootstrap.min.css")">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="@Url.Content("~/css/fontawesome-all.css")">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="@Url.Content("~/bower_components/Ionicons/css/ionicons.min.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/AdminLTE.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/skins/_all-skins.min.css")">
+    <script src="~/js/UnicodeRomanized.js"></script>
+    @*<script src="~/js/UnicodeTraditional.js"></script>*@
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- Bootstrap Core CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini fixed">
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "Home")" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>A</b>LT</span>
+                <!-- logo for regular state and mobile devices -->
+                @*<figure><img src="images/imis.png" alt="IMIS"></figure>*@
+
+                <span class="logo-lg"><b>AT work</b></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+
+                <div class="brand">
+                    @*<a class="sidebar-toggle"><i class="material-icons">menu</i></a>*@
+                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <a class="platform-name" href="@Url.Action("Index", "Home")">
+                        <figure><img src="~/images/logo.svg" alt="alternative"></figure>
+                        <span>AT</span>
+                    </a>
+                    <ul class="authority">
+                        @*<li>Deputy Prime Minister's Office</li>
+                            <li>Department of Social Welfare</li>
+                            <li>Kingdom of Swaziland</li>*@
+                    </ul>
+                </div>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="hidden-xs">@User.Identity.Name</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        @User.Identity.Name
+
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                <button type="submit" class="nav-link btn btn-link text-dark" id="logout">Logout</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
+
+                            </ul>
+                        </li>
+                         
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">MENU</li>
+                    <partial name="_sideMenuBar.cshtml" />
+                    @*@await Html.PartialAsync("~/Views/Shared/Menu/_sideMenuBar.cshtml")*@
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->          <!-- /.content-wrapper -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.4.0
+            </div>
+            <strong>Copyright &copy; 2019 <a href="">At Work</a>.</strong> All rights
+            reserved.
+        </footer>
+
+
+        <!-- Add the sidebar's background. This div must be placed
+        immediately after the control sidebar -->
+        <div class="control-sidebar-bg">
+
+        </div>
+
+    </div>     <!-- ./wrapper -->
+    <!-- jQuery 3 -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="@Url.Content("~/bower_components/jquery-ui/jquery-ui.min.js")"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>$.widget.bridge('uibutton', $.ui.button);</script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="@Url.Content("~/bower_components/bootstrap/dist/js/bootstrap.min.js")"></script>
+    <!-- Morris.js charts -->
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="@Url.Content("~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")"></script>
+    <!-- Slimscroll -->
+    <script src="@Url.Content("~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js")"></script>
+    <!-- FastClick -->
+    @*<script src="@Url.Content("~/bower_components/fastclick/lib/fastclick.js")"></script>*@
+    <!-- AdminLTE App -->
+    <script src="@Url.Content("~/dist/js/adminlte.min.js")"></script>
+    <script lang="ja" type="text/javascript">
+
+        jQuery(document).ready(function () {
+            jQuery(document).on('click', '.btn-close', function () {
+                $('#myModal').modal('hide');
+                $('.modal').modal('hide');
+
+            });
+
+            jQuery(document).on('click', '#logout', function () {
+                localStorage.clear();
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

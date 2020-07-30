@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200519114141_Initial.cs" />
+    <Compile Remove="Migrations\20200519114141_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200519114815_Initial.cs" />
+    <Compile Remove="Migrations\20200519114815_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200519115307_Initial.cs" />
+    <Compile Remove="Migrations\20200519115307_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200519115612_Initial.cs" />
+    <Compile Remove="Migrations\20200519115612_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200520114442_initial1.cs" />
+    <Compile Remove="Migrations\20200520114442_initial1.Designer.cs" />
+    <Compile Remove="Migrations\20200520115351_Initial.cs" />
+    <Compile Remove="Migrations\20200520115351_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200527070728_foreginkeyforuserid.cs" />
+    <Compile Remove="Migrations\20200527070728_foreginkeyforuserid.Designer.cs" />
+    <Compile Remove="Migrations\20200625115950_addednewtable.cs" />
+    <Compile Remove="Migrations\20200625115950_addednewtable.Designer.cs" />
+    <Compile Remove="Migrations\20200625120122_addednewtable.cs" />
+    <Compile Remove="Migrations\20200625120122_addednewtable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+  </ItemGroup>
+
+</Project>
